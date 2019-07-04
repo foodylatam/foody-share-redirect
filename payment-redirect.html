@@ -1,0 +1,36 @@
+<script>
+let formValues = {
+      description: 'pruebas',
+      buyerFullName: 'name',
+      buyerEmail: 'email@gmail.com',
+      amount: '1000',
+      tax: 0,
+      taxReturnBase: 0,
+      currency: 'COP',
+      merchantId: '508029',
+      accountId: '512321',
+      referenceCode: 'asdkfjasdlkjfasd',
+  
+      algorithmSignature: 'SHA256',
+      signature: '40283402803948209384029830498023',
+      test: '0'
+    };
+
+    var f = document.createElement('form');
+    f.setAttribute('method', 'post');
+    f.setAttribute('hidden', 'true');
+    f.setAttribute('name', 'paymentform');
+    f.setAttribute('action', 'https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu');
+
+    Object.keys(formValues).forEach(key => {
+      let i = document.createElement('input');
+      i.setAttribute('type', 'hidden');
+      i.setAttribute('name', key);
+      i.setAttribute('value', formValues[key]);
+      f.appendChild(i);
+    });
+
+    document.getElementsByTagName('body')[0].appendChild(f);
+
+    document.forms.paymentform.submit();
+</script>
