@@ -24,53 +24,56 @@
       font-weight: 400;
     }
   </style>
+  
 </head>
 
 <body>
   <img src="https://static.wixstatic.com/media/3c9730_a1adf3b6bc3c43c48a0fa270bcfeee32~mv2.png" />
   <h4>Redireccionándote a la plataforma de pagos ...</h4>
-  <script type="text/javacript">
-    var search = location.search.substring(1);
-    let options = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
+  <script>
+    console.log("slfdkjas")
+    let search = location.search.substring(1);
+    let options = JSON.parse('{"' + search.replace(/\+/g, ' ').replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
 
+    console.log(options)
     if (options && options.signature) {
-        let testIndicator = options.confirmationUrl && options.confirmationUrl.includes('app.foody.com.co') ? 0 : 1;
-        
-        let formValues = {
-            description: options.description,
-            buyerFullName: options.name,
-            buyerEmail: options.email,
-            amount: options.amount,
-            tax: 0,
-            taxReturnBase: 0,
-            currency: 'COP',
-            merchantId: options.merchantId,
-            accountId: options.accountId,
-            referenceCode: options.reference,
-            responseUrl: options.responseUrl,
-            confirmationUrl: options.confirmationUrl,
-            algorithmSignature: 'SHA256',
-            signature: options.signature,
-            test: testIndicator
-        };
-        
-        var f = document.createElement('form');
-        f.setAttribute('method', 'post');
-        f.setAttribute('hidden', 'true');
-        f.setAttribute('name', 'paymentform');
-        f.setAttribute('action', options.endpoint);
-        
-        Object.keys(formValues).forEach(key => {
-            let i = document.createElement('input');
-            i.setAttribute('type', 'hidden');
-            i.setAttribute('name', key);
-            i.setAttribute('value', formValues[key]);
-            f.appendChild(i);
-        });
-        
-        document.getElementsByTagName('body')[0].appendChild(f);
-        
-        document.forms.paymentform.submit();
+      let testIndicator = options.confirmationUrl && options.confirmationUrl.includes('app.foody.com.co') ? 0 : 1;
+
+      let formValues = {
+        description: options.description,
+        buyerFullName: options.name,
+        buyerEmail: options.email,
+        amount: options.amount,
+        tax: 0,
+        taxReturnBase: 0,
+        currency: 'COP',
+        merchantId: options.merchantId,
+        accountId: options.accountId,
+        referenceCode: options.reference,
+        responseUrl: options.responseUrl,
+        confirmationUrl: options.confirmationUrl,
+        algorithmSignature: 'SHA256',
+        signature: options.signature,
+        test: testIndicator
+      };
+
+      let f = document.createElement('form');
+      f.setAttribute('method', 'post');
+      f.setAttribute('hidden', 'true');
+      f.setAttribute('name', 'paymentform');
+      f.setAttribute('action', options.endpoint);
+
+      Object.keys(formValues).forEach(key => {
+        let i = document.createElement('input');
+        i.setAttribute('type', 'hidden');
+        i.setAttribute('name', key);
+        i.setAttribute('value', formValues[key]);
+        f.appendChild(i);
+      });
+
+      document.getElementsByTagName('body')[0].appendChild(f);
+
+      document.forms.paymentform.submit();
     }
   </script>
 </body>
