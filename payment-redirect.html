@@ -31,11 +31,9 @@
   <img src="https://static.wixstatic.com/media/3c9730_a1adf3b6bc3c43c48a0fa270bcfeee32~mv2.png" />
   <h4>Redireccionándote a la plataforma de pagos ...</h4>
   <script>
-    console.log("slfdkjas")
     let search = location.search.substring(1);
     let options = JSON.parse('{"' + search.replace(/\+/g, ' ').replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) { return key === "" ? value : decodeURIComponent(value) })
 
-    console.log(options)
     if (options && options.signature) {
       let testIndicator = options.confirmationUrl && options.confirmationUrl.includes('app.foody.com.co') ? 0 : 1;
 
